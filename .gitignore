@@ -34,3 +34,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 db1
+db1-journal
