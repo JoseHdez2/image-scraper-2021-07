@@ -4,9 +4,9 @@ import { UpdateImageDto } from './dto/update-image.dto';
 
 @Injectable()
 export class ImagesService {
-  // create(createImageDto: CreateImageDto) {
-  //   return 'This action adds a new image';
-  // }
+  create(createImageDto: CreateImageDto) {
+    return 'This action adds a new image';
+  }
 
   findAll(page: number, limit?: number) {
     return `This action returns all images`;
