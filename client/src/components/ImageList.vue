@@ -16,8 +16,8 @@
 const exampleItems = [...Array(150).keys()].map(i => ({ id: (i+1), name: 'Item ' + (i+1) }));
 let exampleResult;
 fetch('localhost:3000/api/images').then(
-  data => { exampleResult = data; console.log(exampleResult) }, 
-  error => { console.error(error); }
+  data => { exampleResult = data; alert(exampleResult) }, 
+  error => { console.error(error); alert(error); }
 );
 
 export default {
