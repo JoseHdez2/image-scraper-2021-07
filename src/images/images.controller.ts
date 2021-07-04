@@ -14,8 +14,9 @@ import { ImagesService } from './images.service';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import { Image } from './entities/image.entity';
-import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('images')
 @Controller('images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
