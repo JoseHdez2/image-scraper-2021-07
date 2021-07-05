@@ -11,22 +11,18 @@ export class ImagesService {
     @InjectRepository(Image) private imagesRepository: Repository<Image>,
   ) {}
 
-  create(createImageDto: CreateImageDto): Promise<Image> {
+  async create(createImageDto: CreateImageDto): Promise<Image[]> {
+    const images = [];
     try {
-      createImageDto.images.forEach((i: string) => {
+      createImageDto.images.forEach(async (i: string) => {
         const img: Image = {
-          id: Date.now(),
           domain: createImageDto.domain,
           url: i,
         };
-        this.imagesRepository.create(img);
-        this.imagesRepository.save(img);
+        await this.imagesRepository.create(img);
+        images.push(await this.imagesRepository.save(img));
       });
-      const newUser = this.imagesRepository.create({
-        id: Date.now(),
-        ...createImageDto,
-      });
-      return this.imagesRepository.save(newUser);
+      return images;
     } catch (err) {
       throw err;
     }

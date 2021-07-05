@@ -11,7 +11,7 @@ import { config1 } from '../ormconfig';
   imports: [
     TypeOrmModule.forRoot(config1),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client/dist'),
+      rootPath: join(__dirname, '../..', 'client/dist'),
     }),
     ImagesModule,
   ],

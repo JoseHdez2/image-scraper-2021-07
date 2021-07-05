@@ -4,7 +4,7 @@ import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn 
 @Entity()
 export class Image {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column()
   domain: string;
