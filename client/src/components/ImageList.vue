@@ -1,12 +1,19 @@
 <template>
     <div class="card text-center m-3 overflow-auto">
       <h3 class="card-header">Image List</h3>
-      <div style="height: 50px; display: flex; flex-direction: row">
+      <div class="filter-row">
         <div style="width: 100px">
           <b-spinner v-if="domainFilterHasChanged" variant="primary" label="Spinning"></b-spinner>
         </div>
-        <input class="w-50" style="height: 2em" v-model="domainFilter" v-debounce:1s="setDomainFilter" placeholder="Domain">
+        <input style="height: 2em; width: 50%" v-model="domainFilter" v-debounce:1s="setDomainFilter" placeholder="Domain">
       </div>
+      <b-pagination
+        class="pagination"
+        v-model="currentPage"
+        :total-rows="totalItems"
+        :per-page="perPage"
+        aria-controls="my-table"
+      ></b-pagination>
       <b-table
         id="my-table"
         :fields="fields"
@@ -16,6 +23,7 @@
         small
       ></b-table>
       <b-pagination
+        class="pagination"
         v-model="currentPage"
         :total-rows="totalItems"
         :per-page="perPage"
@@ -104,3 +112,17 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+  .domain-filter {
+    width: 50%;
+  }
+  .filter-row {
+    margin: 5px auto;
+    display: flex; 
+    flex-direction: row
+  }
+  .pagination {
+    margin: 5px auto;
+  }
+</style>
