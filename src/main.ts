@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Image Scraping API')
+    .setTitle('Image Scraper API')
     .setDescription('API for scraping and storing images from websites.')
     .setVersion('0.1')
     .build();
