@@ -1,9 +1,9 @@
 # Image Scraper API
 ### Instructions
 To build and run locally:
-```
+```bash
 git clone https://github.com/JoseHdez2/image-scraper-2021-07.git
-git cd image-scraper-2021-07
+cd image-scraper-2021-07
 # install and build static Vue client
 cd client
 npm i
