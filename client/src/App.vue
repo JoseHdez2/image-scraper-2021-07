@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <span class="logo">🖼</span>
+    <h3>Image Scraper 2021-07</h3>
     <ImageList />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import ImageList from './components/ImageList.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
     ImageList
   }
 }
@@ -27,5 +25,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.logo {
+  font-size: 100px;
 }
 </style>
