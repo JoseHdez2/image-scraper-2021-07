@@ -32,7 +32,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
     "sqlite3": "^5.0.2",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "vue-debounce": "^3.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.6.0",

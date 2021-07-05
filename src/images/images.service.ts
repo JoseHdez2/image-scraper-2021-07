@@ -43,9 +43,9 @@ export class ImagesService {
     domain?: string,
   ): Promise<Pagination<Image>> {
     const queryBuilder = this.imagesRepository.createQueryBuilder('i');
-    if (domain) {
-      queryBuilder.where('i.domain LIKE %:domain%', { domain });
-    }
+    // if (domain) {
+    //   queryBuilder.where("i.domain LIKE '%:domain%'", { domain: domain });
+    // }
 
     return paginate<Image>(queryBuilder, options);
   }

@@ -3,6 +3,7 @@
     <span class="logo">🖼</span>
     <h3>Image Scraper 2021-07</h3>
     <ImageList />
+    <a href="/api">API</a>
   </div>
 </template>
 
