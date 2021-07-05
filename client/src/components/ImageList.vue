@@ -34,7 +34,7 @@ export default {
     name: 'ImageList',
     data() {
       return {
-        perPage: 5,
+        perPage: 50,
         currentPage: 1,
         totalItems: 0,
         fields: [

@@ -33,11 +33,6 @@ export class ImagesService {
     }
   }
 
-  findAll(page: number, limit: number): Promise<Image[]> {
-    const thePage = page - 1;
-    return this.imagesRepository.find({ skip: thePage * limit, take: limit });
-  }
-
   async paginate(
     options: IPaginationOptions,
     domain?: string,

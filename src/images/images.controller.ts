@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -22,7 +23,7 @@ export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post()
-  @ApiOkResponse({ type: Image })
+  @ApiOkResponse()
   create(@Body() createImageDto: CreateImageDto) {
     return this.imagesService.create(createImageDto);
   }
@@ -37,6 +38,17 @@ export class ImagesController {
   ) {
     limit = limit > 100 ? 100 : limit;
     return this.imagesService.paginate({ page, limit }, domain);
+  }
+
+  @Post('createTestData')
+  @ApiOkResponse()
+  async createTestData() {
+    const testDomains = ['www.domain1.com', 'www.domain2.com', 'www.example.io', 'www.test.it']
+    for (const domain of testDomains) {
+      const testData: CreateImageDto = {domain, images: [...Array(100).keys()].map(i => `image${i}.jpg`)};
+      await this.imagesService.create(testData);
+    }
+    return ApiOkResponse();
   }
 
   // @Get(':id')
