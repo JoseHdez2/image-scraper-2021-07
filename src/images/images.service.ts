@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
@@ -31,6 +36,18 @@ export class ImagesService {
   findAll(page: number, limit: number): Promise<Image[]> {
     const thePage = page - 1;
     return this.imagesRepository.find({ skip: thePage * limit, take: limit });
+  }
+
+  async paginate(
+    options: IPaginationOptions,
+    domain?: string,
+  ): Promise<Pagination<Image>> {
+    const queryBuilder = this.imagesRepository.createQueryBuilder('i');
+    if (domain) {
+      queryBuilder.where('i.domain LIKE %:domain%', { domain });
+    }
+
+    return paginate<Image>(queryBuilder, options);
   }
 
   // findOne(id: number) {

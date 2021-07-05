@@ -27,16 +27,16 @@ export class ImagesController {
     return this.imagesService.create(createImageDto);
   }
 
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-  })
+  @ApiQuery({ name: 'limit', required: false })
+  @ApiQuery({ name: 'domain', required: false })
   @Get()
   findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit?: number,
+    @Query('domain') domain?: string,
   ) {
-    return this.imagesService.findAll(page, limit);
+    limit = limit > 100 ? 100 : limit;
+    return this.imagesService.paginate({ page, limit }, domain);
   }
 
   // @Get(':id')
