@@ -4,10 +4,12 @@ To build and run locally:
 ```bash
 git clone https://github.com/JoseHdez2/image-scraper-2021-07.git
 cd image-scraper-2021-07
+
 # install and build static Vue client
 cd client
 npm i
 npm build
+
 # install, build and start NestJS api
 cd ..
 npm i
