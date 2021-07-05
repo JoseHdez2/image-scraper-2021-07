@@ -1,9 +1,15 @@
 <template>
     <div class="card text-center m-3 overflow-auto">
       <h3 class="card-header">Image List</h3>
-      <input v-model="domainFilter" placeholder="Domain">
+      <div style="height: 50px; display: flex; flex-direction: row">
+        <div style="width: 100px">
+          <b-spinner v-if="domainFilterHasChanged" variant="primary" label="Spinning"></b-spinner>
+        </div>
+        <input style="height: 2em" v-model="domainFilter" v-debounce:1s="setDomainFilter" placeholder="Domain">
+      </div>
       <b-table
         id="my-table"
+        :fields="fields"
         :items="items"
         :per-page="0"
         :current-page="currentPage"
@@ -32,9 +38,14 @@ export default {
         perPage: 5,
         currentPage: 1,
         totalItems: 0,
+        fields: [
+          { key: 'id', label: 'ID' },
+          { key: 'url', label: 'Url' },
+          { key: 'domain', label: 'Domain' },
+        ],
         items: [],
         domainFilter: null,
-        awaitingSearch: false
+        domainFilterHasChanged: false
       }
     },
     mounted() {
@@ -51,11 +62,12 @@ export default {
       }
     },
     methods: {
-      async fetchData(domainFilter) {
+      async fetchData() {
         let url = `api/images?page=${this.currentPage}`
-        if(domainFilter) {
-          url += `&domain=${domainFilter}`
+        if(this.domainFilter) {
+          url += `&domain=${this.domainFilter}`
         }
+        this.domainFilterHasChanged = false;
         this.items = await fetch(url)
           .then(res => {
             // this.totalItems = parseInt(res.headers.get('x-total-count'), 10)
@@ -67,15 +79,11 @@ export default {
             console.log(this.items);
           })
       },
-      // onPaginationChange(page) {
-
-      //   fetch(`api/images?page=${page}`)
-      //     .then(response => response.json())
-      //     .then(
-      //       data => { this.items = this.items.splice(); }, 
-      //       error => { console.error(error); }
-      //     );
-      // }
+      setDomainFilter() {
+        this.fetchData().catch(error => {
+          console.error(error)
+        })
+      }
     },
     watch: {
       currentPage: {
@@ -85,15 +93,11 @@ export default {
           })
         }
       },
-      domainFilter: function (domainFilter) {
-        if (!this.awaitingSearch) {
-          setTimeout(() => {
-            this.fetchData(domainFilter);
-            this.awaitingSearch = false;
-          }, 1000); // 1 sec delay
+      domainFilter: {
+        handler: function(value) {
+          this.domainFilterHasChanged = true;
         }
-        this.awaitingSearch = true;
-      },
+      }
     }
 };
 </script>

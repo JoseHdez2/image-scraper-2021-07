@@ -3,8 +3,12 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
-import { PaginationPlugin, TablePlugin } from 'bootstrap-vue'
+import vueDebounce from 'vue-debounce'
+import { PaginationPlugin, SpinnerPlugin, TablePlugin } from 'bootstrap-vue'
+
+Vue.use(vueDebounce)
 Vue.use(PaginationPlugin)
+Vue.use(SpinnerPlugin)
 Vue.use(TablePlugin)
 
 new Vue({
