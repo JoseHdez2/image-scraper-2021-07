@@ -28,5 +28,6 @@ export default {
 }
 .logo {
   font-size: 100px;
+  color: #007bff;
 }
 </style>

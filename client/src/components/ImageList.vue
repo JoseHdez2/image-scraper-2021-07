@@ -4,41 +4,26 @@
       <b-table
         id="my-table"
         :items="items"
-        :per-page="perPage"
+        :per-page="0"
         :current-page="currentPage"
         small
       ></b-table>
       <b-pagination
         v-model="currentPage"
-        :total-rows="rows"
+        :total-rows="totalItems"
         :per-page="perPage"
         aria-controls="my-table"
-        @input="onPaginationChange"
       ></b-pagination>
 
       <div class="card-footer pb-0 pt-3">
         <p class="mt-3">Page {{ `${currentPage} of ${pages}` }} ( {{ rows }} images )</p>
       </div>
-        <!-- <h3 class="card-header">Vue.js Pagination Tutorial & Example</h3>
-        <div class="card-body">
-            <div v-for="item in pageOfItems" :key="item.id">{{item.name}}</div>
-        </div>
-        <div class="card-footer pb-0 pt-3">
-            <jw-pagination :items="exampleItems" @changePage="onChangePage"></jw-pagination>
-        </div> -->
     </div>
 </template>
 
 <script>
 // an example array of items to be paged
-const items = [...Array(150).keys()].map(i => ({ id: (i+1), name: 'Item ' + (i+1) }));
-
-            // fetch(`api/images`)
-            //   .then(response => response.json())
-            //   .then(
-            //     data => { items = data; alert(JSON.stringify(items)) }, 
-            //     error => { console.error(error); console.dir(error); }
-            //   );
+let items = [...Array(150).keys()].map(i => ({ id: (i+1), domain: `d${(i+1)}`, url: `u${(i+1)}` }));
 
 export default {
     name: 'ImageList',
@@ -46,19 +31,51 @@ export default {
       return {
         perPage: 5,
         currentPage: 1,
+        totalItems: 0,
         items: items
       }
     },
+    mounted() {
+      this.fetchData().catch(error => {
+        console.error(error)
+      })
+    },
     computed: {
       rows() {
-        return this.items.length
+        return this.totalItems;
       },
       pages() {
-        return this.items.length / this.perPage
+        return Math.ceil(this.rows / this.perPage);
       }
     },
-    onPaginationChange(page) {
-      alert(page);
+    methods: {
+      async fetchData() {
+        this.items = await fetch(`https://jsonplaceholder.typicode.com/comments?_page=${this.currentPage}&_limit=${this.perPage}`)
+          .then(res => {
+            this.totalItems = parseInt(res.headers.get('x-total-count'), 10)
+
+            return res.json()
+          })
+          .then(items => items)
+      },
+      // onPaginationChange(page) {
+
+      //   fetch(`api/images?page=${page}`)
+      //     .then(response => response.json())
+      //     .then(
+      //       data => { this.items = this.items.splice(); }, 
+      //       error => { console.error(error); }
+      //     );
+      // }
+    },
+    watch: {
+      currentPage: {
+        handler: function(value) {
+          this.fetchData().catch(error => {
+            console.error(error)
+          })
+        }
+      }
     }
 };
 </script>
