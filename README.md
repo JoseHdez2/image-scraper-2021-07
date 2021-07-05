@@ -1,3 +1,26 @@
+# Image Scraper API
+### Instructions
+To build and run locally:
+```
+git clone https://github.com/JoseHdez2/image-scraper-2021-07.git
+git cd image-scraper-2021-07
+# install and build static Vue client
+cd client
+npm i
+npm build
+# install, build and start NestJS api
+cd ..
+npm i
+npm start
+```
+Finally, open a browser in `localhost:3000` to see the frontend, and navigate to `localhost:3000/api` to see the API documentation.
+
+The implemented points are:
+- An API that stores and accepts images with a domain and url, and filters by domain.
+- A frontend that displays this data with pagination and filtering.
+
+---
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
