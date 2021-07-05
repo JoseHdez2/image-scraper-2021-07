@@ -5,7 +5,7 @@
         <div style="width: 100px">
           <b-spinner v-if="domainFilterHasChanged" variant="primary" label="Spinning"></b-spinner>
         </div>
-        <input style="height: 2em" v-model="domainFilter" v-debounce:1s="setDomainFilter" placeholder="Domain">
+        <input class="w-50" style="height: 2em" v-model="domainFilter" v-debounce:1s="setDomainFilter" placeholder="Domain">
       </div>
       <b-table
         id="my-table"
@@ -24,7 +24,6 @@
 
       <div class="card-footer pb-0 pt-3">
         <p class="mt-3">Page {{ `${currentPage} of ${pages}` }} ( {{ rows }} images )</p>
-        items: {{ domainFilter }}
       </div>
     </div>
 </template>
@@ -63,12 +62,12 @@ export default {
     },
     methods: {
       async fetchData() {
-        let url = `api/images?page=${this.currentPage}`
+        let url = `api/images?page=${this.currentPage}&limit=${this.perPage}`
         if(this.domainFilter) {
           url += `&domain=${this.domainFilter}`
         }
         this.domainFilterHasChanged = false;
-        this.items = await fetch(url)
+        await fetch(url)
           .then(res => {
             // this.totalItems = parseInt(res.headers.get('x-total-count'), 10)
             return res.json();
@@ -76,6 +75,10 @@ export default {
           .then(json => {
             this.totalItems = json.meta.totalItems;
             this.items = json.items;
+            // this.items = json.items.map(it => {
+            //   const item = {id: it.id, domain: it.domain, url: it.url}
+            //   return item;
+            // });
             console.log(this.items);
           })
       },
