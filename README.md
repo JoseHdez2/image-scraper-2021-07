@@ -8,7 +8,7 @@ cd image-scraper-2021-07
 # install and build static Vue client
 cd client
 npm i
-npm build
+npm run build
 
 # install, build and start NestJS api
 cd ..
